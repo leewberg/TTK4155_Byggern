@@ -9,9 +9,6 @@
 
 int main(){
     uart_init(MYUBRR);
-    while(1){
-        printf("Ting funker");
-        _delay_ms(100);
-    }
+    printf("Hello World!");
     return 0;
 }
