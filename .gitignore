@@ -1,2 +1,5 @@
 build
 openocd
+.clangd
+compile_commands.json
+*.log

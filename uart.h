@@ -5,9 +5,9 @@
 
 void uart_init(unsigned int ubrr);
 
-int uart_transmit(unsigned char data, FILE* file);
-int uart_reciever(FILE* file);
+int uart_transmit_f(char data, FILE* file);
+int uart_reciever_f(FILE* file);
 
-void uart_test_reciever(void);
+int uart_transmit(unsigned char data);
+int uart_reciever();
 
-void uart_test_transmitter(void);
