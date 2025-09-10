@@ -3,7 +3,7 @@
 #include <avr/io.h>
 #include <stdio.h>
 
-#define BASE_ADRESS 0x1800 //SRAM start adress. alt: 0x1400
+#define BASE_ADRESS 0x1400 //SRAM start adress
 
 void SRAM_init();
 

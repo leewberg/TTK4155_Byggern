@@ -2,12 +2,9 @@
 #include "latch.h"
 #include <avr/io.h>
 #include <avr/delay.h>
-// mulig avr/delay.h ikke funker, og du må bruke følgende:
-// #define F_CPU 4915200
-// #include <util/delay.h>
 
 void latch_test() {
-  DDRE = 0b10; // Setter ALE (pin 1 på port E) som utgang. 0=inngang, 1=utgang
+  DDRE = 0b10; // Set ALE as output
   PORTE = 0b10;
   DDRA = 0b11111111;
 //  PORTA = 0b1;
@@ -15,20 +12,20 @@ void latch_test() {
   DDRC = 0b1111;
 
   while(1){
-    PORTE = 0b10; // Setter ALE høy. Forteller vippa at nå kommer det en adresse som skal lagres.
-    PORTA = 0; // = 0x00. Sender en adresse ut til vippa.
+    PORTE = 0b10; //Put ALE high. Tells the latch that it's recieving an adress it needs to save.
+    PORTA = 0; // = 0x00. Sends an adress to the latch.
 
-    _delay_ms(2000); // 2 sek delay for å gjøre det enklere å måle på kretsen.
+    _delay_ms(2000); // 2 sec delay for measuring.
 
-    PORTE = 0b00; // Setter ALE lav. Nå lagres adresseverdien i vippa.
+    PORTE = 0b00; // Sets ALE low, and the adress is stored in the latch
 
     _delay_ms(4000);
 
-    PORTA = 0b01010101; // Sender ut ny adresse. Ingenting skjer på baksiden av vippa.
+    PORTA = 0b01010101;
 
     _delay_ms(2000);
 
-    PORTE = 0b10; // Gammel adresse fjernes fra vippa og den nye sendes gjennom.
+    PORTE = 0b10;
     printf("loop complete! \n");
     _delay_ms(2000);
 
