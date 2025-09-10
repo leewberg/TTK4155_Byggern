@@ -19,6 +19,7 @@ void SRAM_test(void){
             write_errors ++;
         }
     }
+    printf("write phase complete!\n");
     srand(seed);
     for(uint16_t i = 0; i< ext_ram_size; i++){
         uint8_t some_value = rand();
