@@ -11,32 +11,37 @@ void uart_init(unsigned int ubrr){
     /*setting frame format: 8data, 2stop bit*/
     UCSR0C = (1<<URSEL0)|(1<<USBS0)|(3<<UCSZ00);
 
-    fdevopen(uart_transmit, uart_reciever);
+    fdevopen(uart_transmit_f, uart_reciever_f);
 }
 
-int uart_transmit(unsigned char data, FILE * file){ //as fdevopen() takes in two functions with return-type int, and with parametre-types of char and FILE*, the transmit 
+// idk why they are here, but they are needed for fdevopen to work
+int uart_transmit_f(char data, FILE * file){
     /*waiting for empty transmit buffer*/
     while (!(UCSR0A & (1<<UDRE0)));
     /*geting and returning recieved data from buffer*/
     UDR0 = data;
-    PORTB = 1;
 
     return 0;
 }
 
-int uart_reciever(FILE * file){
+int uart_reciever_f(FILE * file){
     /*waiting for data to be recieved*/
     while( !(UCSR0A & (1<<RXC0)));
     return UDR0;
 }
 
-/*void uart_test_reciever(void){
-    if (uart_reciever() == 'a'){
-            uart_transmit('b');
-        }
-    _delay_ms(100);
-}*/
+int uart_transmit(unsigned char data){
+    /*waiting for empty transmit buffer*/
+    while (!(UCSR0A & (1<<UDRE0)));
+    /*geting and returning recieved data from buffer*/
+    UDR0 = data;
 
-/*void uart_test_transmitter(void){
-    uart_transmit('a');
-}*/
+    return 0;
+}
+
+int uart_reciever(){
+    /*waiting for data to be recieved*/
+    while( !(UCSR0A & (1<<RXC0)));
+    return UDR0;
+}
+
