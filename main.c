@@ -1,14 +1,18 @@
 #include <avr/io.h>
 #include "uart.h"
+#include "SRAM.h"
+#include "unit_tests/latch.h"
+#include "unit_tests/SRAM.h"
+#include "unit_tests/uart.h"
+#include "consts.h"
 
-#define FOSC 4915200
-#define BAUD 9600
-#define MYUBRR FOSC/16/BAUD -1 
 //picocom command to read output from computer
 //picocom -b 9600 -p 2 -r -l /dev/ttyS0
 
 int main(){
     uart_init(MYUBRR);
-    printf("Hello World!");
+    //SRAM_init();
+    latch_test();
+        //printf("Hello World!");
     return 0;
 }

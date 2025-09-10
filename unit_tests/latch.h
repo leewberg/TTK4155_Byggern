@@ -1,0 +1,1 @@
+void latch_test();

@@ -1,4 +1,3 @@
-#include <avr/io.h>
 #include "../uart.h"
 
 void uart_test_reciever(void){
