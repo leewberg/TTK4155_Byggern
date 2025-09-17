@@ -7,23 +7,32 @@
 
 void adc_test(void){
 	while (1){
-		int* arr = adc_get();
-		adc_print(arr);
-		free(arr);
+		int* adc_out = adc_get();
+        joystick_norm(adc_out);
+		adc_print(adc_out);
+		free(adc_out);
 	}
 }
 
+int adc_digital_to_angle(int D, const int D_min, const int D_mid, const int D_max){
+    if(D >= D_mid){
+        return ((D - D_mid) * 100) / (D_max - D_mid); 
+    } else {
+        return ((D - D_mid) * 100) / (D_mid - D_min); 
+    }
+}
+
 enum DIRECTION get_direction(int* adc_out){
-	if(adc_out[1] > JOY_DEADZONE + 128){
+	if(adc_out[1] > JOY_DEADZONE){
 		return UP;
 	}
-	else if(adc_out[1] < 128 - JOY_DEADZONE){
+	else if(adc_out[1] <  -JOY_DEADZONE){
 		return DOWN;
 	}
-	else if(adc_out[0] > JOY_DEADZONE + 128){
+	else if(adc_out[0] > JOY_DEADZONE){
 		return RIGHT;
 	}
-	else if(adc_out[0] < 128 - JOY_DEADZONE){
+	else if(adc_out[0] <  -JOY_DEADZONE){
 		return LEFT;
 	}
 	else{
@@ -52,6 +61,12 @@ int* adc_get(void){
 	adc_out[0] = joy_x + JOY_X_OFFSET;
 	adc_out[3] = touch_y;
 	return adc_out;
+}
+
+void joystick_norm(int* adc_out){
+    adc_out[0] = adc_digital_to_angle(adc_out[0], Dx_min, Dx_mid, Dx_max);
+    adc_out[1] = adc_digital_to_angle(adc_out[1], Dy_min, Dy_mid, Dy_max);
+
 }
 
 void calibrate_joystick(void){

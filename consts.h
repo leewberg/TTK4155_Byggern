@@ -11,3 +11,9 @@
 #define CONVERSION_TIME (9*2*4)/FREQ_ADC
 #define ADC_ADDR 0x1300
 #define JOY_DEADZONE 5
+#define Dx_min 41
+#define Dx_mid 128
+#define Dx_max 214
+#define Dy_min 36
+#define Dy_mid 128
+#define Dy_max 210

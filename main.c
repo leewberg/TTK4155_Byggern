@@ -17,5 +17,6 @@ int main(){
     SRAM_init();
     adc_init();
     adc_test();
+    //adc_test_DtA();
     return 0;
 }
