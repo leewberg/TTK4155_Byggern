@@ -16,7 +16,7 @@ typedef struct {
 } ADC_DATA;
 
 
-volatile ADC_DATA* adc_init(void); // set up interrupts here
+ADC_DATA* adc_init(void); // set up interrupts here
 void adc_test(void);
 
-void adc_print(const volatile ADC_DATA* adc_data); // this one should take inn adc_data, becuase its a util to be used outside adc.c
+void adc_print(const ADC_DATA* adc_data); // this one should take inn adc_data, becuase its a util to be used outside adc.c

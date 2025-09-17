@@ -15,8 +15,7 @@
 int main(){
     uart_init(MYUBRR);
     SRAM_init();
-    adc_init();
+    ADC_DATA* adc_data = adc_init();
     adc_test();
-    //adc_test_DtA();
     return 0;
 }

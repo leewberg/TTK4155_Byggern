@@ -3,21 +3,23 @@
 #include <stdio.h>
 #include <util/delay.h>
 #include <stdlib.h>
+#include <avr/interrupt.h>
 #include "consts.h"
 
 int JOY_X_OFFSET;
 int JOY_Y_OFFSET;
 
 volatile char *adc = (char *)ADC_ADDR;
-volatile ADC_DATA* adc_data;
+ADC_DATA* adc_data;
 
 //private functions
 void joystick_norm();
-void adc_update();
 void adc_get(void);
 void calibrate_joystick(void);
 
-int adc_digital_to_angle(const volatile int D, const int D_min, const int D_mid, const int D_max){
+
+int adc_digital_to_angle(const int D, const int D_min, const int D_mid, const int D_max){
+	//this could be a more general util for renormalizing values
     if(D >= D_mid){
         return ((D - D_mid) * 100) / (D_max - D_mid);
     } else {
@@ -25,14 +27,7 @@ int adc_digital_to_angle(const volatile int D, const int D_min, const int D_mid,
     }
 }
 
-void adc_test(void){
-	while (1){
-		adc_update();
-		adc_print(adc_data);
-	}
-}
-
-enum DIRECTION get_direction(const volatile POS* joy){
+enum DIRECTION get_direction(const POS* joy){
 	if(joy->y > JOY_DEADZONE){
 		return UP;
 	}
@@ -59,12 +54,6 @@ void adc_get(void){
 	adc_data->touch.y = adc[0];
 }
 
-void adc_update(){
-	adc_get();
-	joystick_norm();
-	adc_data->dir = get_direction(&adc_data->joy);
-}
-
 void joystick_norm(){
 	adc_data->joy.x += JOY_X_OFFSET;
 	adc_data->joy.y += JOY_Y_OFFSET;
@@ -79,27 +68,47 @@ void calibrate_joystick(void){
 	JOY_Y_OFFSET = 128 - adc_data->joy.y;
 }
 
-void adc_print(const volatile ADC_DATA* adc_data){
+void adc_print(const ADC_DATA* adc_data){
 	printf("Touchpad x: %4d Toucpad y: %4d Joystick x: %4d Joystick y: %4d  \n\r",
 		adc_data->touch.x, adc_data->touch.y, adc_data->joy.x, adc_data->joy.y);
 }
 
+void adc_test(void){
+	while (1){
+		adc_get();
+		joystick_norm();
+		adc_data->dir = get_direction(&adc_data->joy);
+		adc_print(adc_data);
+	}
+}
 
-volatile ADC_DATA* adc_init(void){
+ISR(TIMER0_OVF_vect){
+	adc_get();
+	joystick_norm();
+	adc_data->dir = get_direction(&adc_data->joy);
+}
+
+ADC_DATA* adc_init(void){
 	// initiate the CTC mode for creating a clock signal for the ADC
-    DDRD |= (1<<PD5);
-    TCCR1A = 0;
+    DDRD |= (1<<PD5); //enable output on pin D5
+    TCCR1A = 0; //reset configuration
     TCCR1B = 0;
     TCCR1B |=(1<<WGM12);
     TCCR1A |= (1<<COM1A0);
     OCR1A = OCR1A_VAL;
     TCCR1B |= (1<<CS10);
 
-	static ADC_DATA my_data;
+	static ADC_DATA my_data; // static, so we don't make multiple copies
 	adc_data = &my_data;
 
 	JOY_X_OFFSET = 0;
 	JOY_Y_OFFSET = 0;
 	calibrate_joystick();
+
+	// set up timer0 for interrupt
+    TCCR0 = (1 << CS01) | (1 << CS00); // Prescaler 64
+    TIMSK |= (1 << TOIE0);
+    sei(); // Enable global interrupts
+
 	return adc_data;
 }
