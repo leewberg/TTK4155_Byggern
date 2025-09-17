@@ -15,7 +15,7 @@
 int main(){
     uart_init(MYUBRR);
     SRAM_init();
-    ADC_DATA* adc_data = adc_init();
+    const volatile ADC_DATA* adc_data = adc_init();
     adc_test();
     return 0;
 }
