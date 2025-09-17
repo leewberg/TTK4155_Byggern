@@ -2,4 +2,8 @@
 #include "consts.h"
 #include <avr/io.h>
 
-void PWM_init(void);
+void CTC_init(void);
+
+void adc_test(void);
+
+void adc_read(void);
