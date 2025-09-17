@@ -2,16 +2,21 @@
 #include "consts.h"
 #include <avr/io.h>
 
-int JOY_X_OFFSET;
-int JOY_Y_OFFSET;
 enum DIRECTION {UP, DOWN, LEFT, RIGHT, NEUTRAL};
-enum DIRECTION get_direction(int* adc_out);
 
-void adc_init(void);
-int adc_digital_to_angle(int D, const int D_min, const int D_mid, const int D_max);
+typedef struct {
+	int x;
+	int y;
+} POS;
+
+typedef struct {
+	POS joy;
+	POS touch;
+	enum DIRECTION dir;
+} ADC_DATA;
+
+
+volatile ADC_DATA* adc_init(void); // set up interrupts here
 void adc_test(void);
-void joystick_norm(int* adc_out);
 
-int* adc_get(void);
-void adc_print(int* adc_out);
-void calibrate_joystick(void);
+void adc_print(const volatile ADC_DATA* adc_data); // this one should take inn adc_data, becuase its a util to be used outside adc.c
