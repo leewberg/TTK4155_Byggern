@@ -5,6 +5,7 @@
 #include "unit_tests/latch.h"
 #include "unit_tests/SRAM.h"
 #include "unit_tests/uart.h"
+#include "adc.h"
 
 //picocom command to read output from computer
 //picocom -b 9600 -p 2 -r -l /dev/ttyS0
@@ -14,6 +15,7 @@
 int main(){
     uart_init(MYUBRR);
     SRAM_init();
-    SRAM_test();
+//    SRAM_test();
+    PWM_init();
     return 0;
 }
