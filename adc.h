@@ -2,8 +2,8 @@
 #include "consts.h"
 #include <avr/io.h>
 
-int JOY_X_OFFSET = 0;
-int JOY_Y_OFFSET = 0;
+int JOY_X_OFFSET;
+int JOY_Y_OFFSET;
 enum DIRECTION {UP, DOWN, LEFT, RIGHT, NEUTRAL};
 enum DIRECTION get_direction(int* adc_out);
 

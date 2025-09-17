@@ -77,5 +77,7 @@ void adc_init(void){
     OCR1A = OCR1A_VAL;
     TCCR1B |= (1<<CS10);
 
+	JOY_X_OFFSET = 0;
+	JOY_Y_OFFSET = 0;
 	calibrate_joystick();
 }
