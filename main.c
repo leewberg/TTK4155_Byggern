@@ -15,9 +15,7 @@
 int main(){
     uart_init(MYUBRR);
     SRAM_init();
-    CTC_init();
-    adc_read();
-//    SRAM_test();
-    //adc_test();
+    adc_init();
+    adc_test();
     return 0;
 }
