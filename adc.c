@@ -8,7 +8,7 @@
 int JOY_X_OFFSET;
 int JOY_Y_OFFSET;
 
-volatile char *adc = (char *)ADC_ADDR;
+static volatile char *adc = (char *)ADC_ADDR;
 static volatile ADC_DATA* adc_data; // static so only stuff in here can access it, volatile cause of the ISR
 
 //private functions
@@ -46,7 +46,7 @@ enum DIRECTION get_direction(volatile const POS* joy){
 
 void adc_get(volatile ADC_DATA* adc_data){
 	adc[0] = 0;
-	_delay_us(CONVERSION_TIME*1000000);
+	_delay_us(CONVERSION_TIME);
 	adc_data->touch.x = adc[0];
 	adc_data->joy.y = adc[0];
 	adc_data->joy.x = adc[0];
@@ -74,9 +74,6 @@ void adc_print(volatile const ADC_DATA* adc_data){
 
 void adc_test(){
 	while (1){
-		adc_get(adc_data);
-		joystick_norm(adc_data);
-		adc_data->dir = get_direction(&adc_data->joy);
 		adc_print(adc_data);
 	}
 }

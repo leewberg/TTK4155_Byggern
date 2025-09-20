@@ -8,7 +8,7 @@
 //#define loop_until_bit_is_clear(reg, bit) while ( test_bit( reg, bit ))
 #define OCR1A_VAL 0b11
 #define FREQ_ADC FOSC/(2*(1+OCR1A_VAL))
-#define CONVERSION_TIME (9*2*4)/FREQ_ADC
+#define CONVERSION_TIME (9*2*4)/FREQ_ADC * 1000000 // in microseconds
 #define ADC_ADDR 0x1300
 #define JOY_DEADZONE 5
 #define Dx_min 41
