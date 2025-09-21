@@ -1,5 +1,6 @@
 #pragma once
 #include "adc.h"
+#include <stdint.h>
 #include <stdio.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
@@ -47,10 +48,10 @@ enum DIRECTION get_direction(volatile const POS* joy){
 void adc_get(volatile ADC_DATA* adc_data){
 	adc[0] = 0;
 	_delay_us(CONVERSION_TIME);
-	adc_data->touch.x = adc[0];
-	adc_data->joy.y = adc[0];
-	adc_data->joy.x = adc[0];
-	adc_data->touch.y = adc[0];
+	adc_data->touch.x = (uint8_t) adc[0];
+	adc_data->joy.y = (uint8_t) adc[0];
+	adc_data->joy.x = (uint8_t) adc[0];
+	adc_data->touch.y = (uint8_t) adc[0];
 }
 
 void joystick_norm(volatile ADC_DATA* adc_data){
