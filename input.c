@@ -4,16 +4,16 @@
 #include "SPI.h"
 #include <util/delay.h>
 
-const INPUT_DATA* input_init(){
+volatile const INPUT_DATA* input_init(){
 	//init adc
 	//init spi
 	SPI_M_init();
 	//return pointer to static data struct
-	static INPUT_DATA data;
+	volatile static INPUT_DATA data;
 	return &data;
 }
 
-void input_read(INPUT_DATA* data){
+void input_read(volatile INPUT_DATA* data){
 	SPI_select_slave(AVR_s);
 
 	// touch pad
@@ -42,17 +42,19 @@ void input_read(INPUT_DATA* data){
 	data->nav_switch = (uint8_t) SPI_M_read(); //read nav switch
 }
 
-void set_leds(LED_DATA* data){
+void set_leds(volatile LED_DATA* data){
 	SPI_select_slave(AVR_s);
 	for (int i = 0; i < 5; i++){
+		printf("%d", i);
 		SPI_M_write(0x05);
-		_delay_us(20);
-		SPI_M_write(i);
-		SPI_M_write(data->leds & (1 << i));
+		_delay_us(40);
+		SPI_M_write(3);
+		_delay_us(2);
+		SPI_M_write(1);//data->leds & (1 << i));
 	}
 }
 
-void input_print(INPUT_DATA* data){
+void input_print(volatile INPUT_DATA* data){
 	printf("Touch: x: %3d, y: %3d ", data->touch_pos.x, data->touch_pos.y);
 	printf("Slider: %3d ", data->slider);
 	printf("Joystick: x: %3d, y: %3d, button: %d ", data->joy_pos.x, data->joy_pos.y, data->joy_button & 0x01);

@@ -40,15 +40,15 @@ volatile char SPI_M_read(void){
 
 void SPI_select_slave(enum SLAVES slave){    
     if (slave == CAN){
-        PORTB = (1 << DDB4) | (1 << DDB3) | (1 << DDB2) | (0 << DDB1);
+        PORTB = (1 << PB4) | (1 << PB3) | (1 << PB2) | (0 << PB1);
     }
     else if (slave == AVR_s){
-        PORTB = (0 << DDB4) | (1 << DDB3) | (1 << DDB2) | (1 << DDB1);
+        PORTB = (0 << PB4) | (1 << PB3) | (1 << PB2) | (1 << PB1);
     }
     else if (slave == OLED_CMD){
-        PORTB = (1 << DDB4) | (0 << DDB3) | (0 << DDB2) | (1 << DDB1);
+        PORTB = (1 << PB4) | (0 << PB3) | (0 << PB2) | (1 << PB1);
     }
     else if (slave == OLED_DATA){
-        PORTB = (1 << DDB4) | (0 << DDB3) | (1 << DDB2) | (1 << DDB1);
+        PORTB = (1 << PB4) | (0 << PB3) | (1 << PB2) | (1 << PB1);
     }
 }

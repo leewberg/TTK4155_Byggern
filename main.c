@@ -19,12 +19,28 @@ int main(){
     uart_init(MYUBRR);
     SRAM_init();
     SPI_M_init();
-	const INPUT_DATA* data = input_init();
-	set_leds(&(LED_DATA){0b00011111});
-	while(1){
-		input_read((INPUT_DATA*) data);
-		input_print((INPUT_DATA*) data);
-		_delay_ms(100);
-	}
+	volatile const INPUT_DATA* data = input_init();
+//	set_leds(&(LED_DATA){0b11111111});
+    while (1){
+	SPI_select_slave(AVR_s);
+    SPI_M_write(0x05);
+    _delay_us(40);
+    SPI_M_write(0b11);
+    _delay_us(2);
+    SPI_M_write(0b1);
+
+    _delay_ms(500);
+	SPI_select_slave(AVR_s);
+    SPI_M_write(0x05);
+    _delay_us(40);
+    SPI_M_write(0b11);
+    _delay_us(2);
+    SPI_M_write(0);
+    }
+	/*while(1){
+		input_read( data);
+		input_print(data);
+		_delay_ms(1000);
+	}*/
     return 0;
 }
