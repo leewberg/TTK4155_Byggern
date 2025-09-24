@@ -17,3 +17,5 @@
 #define Dy_min 36
 #define Dy_mid 128
 #define Dy_max 210
+#define OLED_ON 0b10101111
+#define OLED_OFF 0b10101110
