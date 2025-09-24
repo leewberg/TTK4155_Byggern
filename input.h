@@ -19,8 +19,8 @@ typedef struct {
 
 // run intterupts on this, but only setting a flag and doing the work in main
 
-volatile const INPUT_DATA* input_init();
+volatile INPUT_DATA* input_init();
 
 void input_read(volatile INPUT_DATA* data);
 void set_leds(volatile LED_DATA* data);
-void input_print(volatile INPUT_DATA* data);
+void input_print(volatile const INPUT_DATA* data);

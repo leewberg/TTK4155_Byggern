@@ -20,35 +20,39 @@ void SPI_M_init(void){
     //Use SPI-Mode 0 (table on p 165 in datasheet). since the rest of SPCR is 0 (except for SPE, MSTR, and SPR0), we don't need to explicitly set CPOL and CPHA, but if you choose another mode, you knwo which signals to change :]
     //see p. 163 in datasheet if you want to change SPI clock rate.
     //if you want to enable interrupts: | (1<<SPIE);
-    //Set SS-pin high
+	//IMPORTANT: ALWAYS DESELECT SLAVES AFTER USING THEM
+	SPI_deselect();
 }
 
 void SPI_M_write(char cData){
-    //Start transmission
     SPDR = cData;
     //Wait for transmission to complete
     while(!(SPSR & (1<<SPIF)));
 }
 
 volatile char SPI_M_read(void){
-    //Wait for reception to complete
+	// dummy write to start transfer
 	SPDR = 0;
     while(!(SPSR & (1<<SPIF)));
-    //Return data register
     return SPDR;
 }
 
-void SPI_select_slave(enum SLAVES slave){    
+void SPI_deselect(){
+	PORTB |= (1 << PB4) | (1 << PB3) | (1 << PB2) | (1 << PB1); //deselects all slaves
+}
+
+void SPI_select_slave(enum SLAVES slave){
     if (slave == CAN){
-        PORTB = (1 << PB4) | (1 << PB3) | (1 << PB2) | (0 << PB1);
+		PORTB &= ~(1 << PB1);
     }
     else if (slave == AVR_s){
-        PORTB = (0 << PB4) | (1 << PB3) | (1 << PB2) | (1 << PB1);
+		PORTB &= ~(1 << PB4);
     }
     else if (slave == OLED_CMD){
-        PORTB = (1 << PB4) | (0 << PB3) | (0 << PB2) | (1 << PB1);
+		PORTB &= ~(1 << PB3); // this is the CS
+		PORTB &= ~(1 << PB2); // this is for setting command mode
     }
     else if (slave == OLED_DATA){
-        PORTB = (1 << PB4) | (0 << PB3) | (1 << PB2) | (1 << PB1);
+		PORTB &= ~(1 << PB3); // this is the CS
     }
 }
