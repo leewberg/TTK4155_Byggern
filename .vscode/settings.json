@@ -3,6 +3,7 @@
         ".als.json": "jsonc",
         "uart.h": "c",
         "latch.h": "c",
-        "adc.h": "c"
+        "adc.h": "c",
+        "cstdint": "c"
     }
 }

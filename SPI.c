@@ -27,27 +27,30 @@ void SPI_M_write(char cData){
     //Start transmission
     SPDR = cData;
     //Wait for transmission to complete
-    while(!(SPSR & (1<<SPIF)));
+    //while(!(SPSR & (1<<SPIF)));
 }
 
 char SPI_M_read(void){
     //Wait for reception to complete
+    SPDR = 0;
     while(!(SPSR & (1<<SPIF)));
     //Return data register
     return SPDR;
 }
 
 void SPI_select_slave(enum SLAVES slave){    
+    PORTB |= (1 << PB4) | (1 << PB3) | (1 << PB2) | (1 << PB1);
+
     if (slave == CAN){
-        PORTB = (1 << DDB4) | (1 << DDB3) | (1 << DDB2) | (0 << DDB1);
+        PORTB &= ~(1 << PB1);
     }
     else if (slave == AVR){
-        PORTB = (0 << DDB4) | (1 << DDB3) | (1 << DDB2) | (1 << DDB1);
+        PORTB &= ~(1 << PB4);
     }
     else if (slave == OLED_CMD){
-        PORTB = (1 << DDB4) | (0 << DDB3) | (0 << DDB2) | (1 << DDB1);
+        PORTB &= ~(1 << PB3) & ~(1 << PB2);
     }
     else if (slave == OLED_DATA){
-        PORTB = (1 << DDB4) | (0 << DDB3) | (1 << DDB2) | (1 << DDB1);
+        PORTB &= ~(1 << PB2);
     }
 }
