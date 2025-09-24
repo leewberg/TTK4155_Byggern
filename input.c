@@ -53,10 +53,10 @@ void set_leds(LED_DATA* data){
 }
 
 void input_print(INPUT_DATA* data){
-	printf("Touch: x: %3d, y: %3d\n", data->touch_pos.x, data->touch_pos.y);
-	printf("Slider: %3d\n", data->slider);
-	printf("Joystick: x: %3d, y: %3d, button: %d\n", data->joy_pos.x, data->joy_pos.y, data->joy_button & 0x01);
-	printf("Right buttons: %02X\n", data->right_btns);
-	printf("Left buttons: %02X\n", data->left_btns);
-	printf("Nav switch: %02X\n", data->nav_switch);
+	printf("Touch: x: %3d, y: %3d ", data->touch_pos.x, data->touch_pos.y);
+	printf("Slider: %3d ", data->slider);
+	printf("Joystick: x: %3d, y: %3d, button: %d ", data->joy_pos.x, data->joy_pos.y, data->joy_button & 0x01);
+	printf("Right buttons: %02X ", data->right_btns);
+	printf("Left buttons: %02X ", data->left_btns);
+	printf("Nav switch: %02X\n\r", data->nav_switch);
 }
