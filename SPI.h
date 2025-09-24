@@ -9,6 +9,6 @@ void SPI_M_init(void);
 
 void SPI_M_write(char cData);
 
-char SPI_M_read(void);
+volatile char SPI_M_read(void);
 
 void SPI_select_slave(enum SLAVES slave);

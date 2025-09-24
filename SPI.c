@@ -30,7 +30,7 @@ void SPI_M_write(char cData){
     while(!(SPSR & (1<<SPIF)));
 }
 
-char SPI_M_read(void){
+volatile char SPI_M_read(void){
     //Wait for reception to complete
 	SPDR = 0;
     while(!(SPSR & (1<<SPIF)));
