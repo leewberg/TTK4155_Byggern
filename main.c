@@ -7,6 +7,8 @@
 #include "unit_tests/uart.h"
 #include "adc.h"
 #include "SPI.h"
+#include "oled.h"
+#include "input.h"
 
 //picocom command to read output from computer
 //picocom -b 9600 -p 2 -r -l /dev/ttyS0
@@ -17,10 +19,11 @@ int main(){
     uart_init(MYUBRR);
     SRAM_init();
     SPI_M_init();
-    oled_init();
-    oled_write_data('a');
-
-    //const volatile ADC_DATA* adc_data = adc_init();
-    //adc_test();
+	const INPUT_DATA* data = input_init();
+	while(1){
+		input_read((INPUT_DATA*) data);
+		input_print((INPUT_DATA*) data);
+		_delay_ms(100);
+	}
     return 0;
 }

@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <util/delay.h>
 
-enum SLAVES {CAN, AVR, OLED_CMD, OLED_DATA};
+enum SLAVES {CAN, AVR_s, OLED_CMD, OLED_DATA};
 
 void SPI_M_init(void);
 

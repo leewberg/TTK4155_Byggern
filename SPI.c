@@ -41,7 +41,7 @@ void SPI_select_slave(enum SLAVES slave){
     if (slave == CAN){
         PORTB = (1 << DDB4) | (1 << DDB3) | (1 << DDB2) | (0 << DDB1);
     }
-    else if (slave == AVR){
+    else if (slave == AVR_s){
         PORTB = (0 << DDB4) | (1 << DDB3) | (1 << DDB2) | (1 << DDB1);
     }
     else if (slave == OLED_CMD){
