@@ -20,6 +20,7 @@ int main(){
     SRAM_init();
     SPI_M_init();
 	const INPUT_DATA* data = input_init();
+	set_leds(&(LED_DATA){0b00011111});
 	while(1){
 		input_read((INPUT_DATA*) data);
 		input_print((INPUT_DATA*) data);

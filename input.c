@@ -18,25 +18,25 @@ void input_read(INPUT_DATA* data){
 
 	// touch pad
 	SPI_M_write(0x01); //send read command
-	_delay_us(20);
+	_delay_us(40);
 	data->touch_pos.x = (uint8_t) SPI_M_read(); //read x
 	data->touch_pos.y = (uint8_t) SPI_M_read(); //read y
 
 	// touch slider
 	SPI_M_write(0x02); //send read command
-	_delay_us(20);
+	_delay_us(40);
 	data->slider = (uint8_t) SPI_M_read(); //read x
 
 	// joystick
 	SPI_M_write(0x03); //send read command
-	_delay_us(20);
+	_delay_us(40);
 	data->joy_pos.x = (uint8_t) SPI_M_read(); //read x
 	data->joy_pos.y = (uint8_t) SPI_M_read(); //read y
 	data->joy_button = (uint8_t) SPI_M_read(); //read joystick button
 	
 	// buttons
 	SPI_M_write(0x04); //send read command
-	_delay_us(20);
+	_delay_us(40);
 	data->right_btns = (uint8_t) SPI_M_read(); //read right buttons
 	data->left_btns = (uint8_t) SPI_M_read(); //read left buttons
 	data->nav_switch = (uint8_t) SPI_M_read(); //read nav switch

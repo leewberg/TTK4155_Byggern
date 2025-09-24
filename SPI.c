@@ -32,6 +32,7 @@ void SPI_M_write(char cData){
 
 char SPI_M_read(void){
     //Wait for reception to complete
+	SPDR = 0;
     while(!(SPSR & (1<<SPIF)));
     //Return data register
     return SPDR;
