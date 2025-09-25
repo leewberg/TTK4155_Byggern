@@ -1,7 +1,6 @@
 #pragma once
 #include <avr/io.h>
 #include <stdio.h>
-#include <util/delay.h>
 
 enum SLAVES {CAN, AVR_s, OLED_CMD, OLED_DATA};
 

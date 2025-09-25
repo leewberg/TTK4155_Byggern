@@ -1,7 +1,6 @@
 #pragma once
 #include <avr/io.h>
 #include <stdio.h>
-#include <util/delay.h>
 
 void uart_init(unsigned int ubrr);
 

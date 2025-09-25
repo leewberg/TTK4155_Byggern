@@ -1,7 +1,7 @@
 #pragma once
 #include "oled.h"
+#include "fonts.h"
 #include "SPI.h"
-#include <util/delay.h>
 
 void oled_init(){
     SPI_select_slave(OLED_CMD);
@@ -14,6 +14,7 @@ void oled_init(){
     SPI_M_write(0xA4);
     SPI_M_write(0xAf);
     SPI_M_write(0xb0);
+	SPI_deselect();
 /*    SPI_M_write(0xA1); //Segment remap
     SPI_M_write(0xDA); // Common pads hardware: alternative
     SPI_M_write(0x12); // Set higher column start adress
@@ -38,23 +39,56 @@ void oled_init(){
 
 void oled_reset(){
     SPI_select_slave(OLED_CMD);
-    SPI_M_write(0xA6); //reset OLED
+    SPI_M_write(0xA6); //reset OLED. yeah that does not work
+	SPI_deselect();
+	for (uint8_t i = 0; i < 8; i++){
+		oled_clear_line(i);
+	}
+
 }
 
-void oled_home(); //set pos to 0,0
+void oled_home(){ oled_set_pos(0,0); }
 
-void oled_goto_line(uint8_t line);
+void oled_goto_line(uint8_t line){
+	SPI_select_slave(OLED_CMD);
+	//some bitmagic here: 0xB0 is the prefix for the command, the lower 4 bits are the line number and they are masked with & 0x0F
+	SPI_M_write(0xB0 | (line & 0x0F)); 
+	SPI_deselect();
+}
+void oled_goto_col(uint8_t col){
+	SPI_select_slave(OLED_CMD);
+	// some more bitmagic: we have to split the 8 bit column number into two 4 bit parts and send them with different commands
+	SPI_M_write(0x00 | (col & 0x0F)); // lower 4 bits
+	SPI_M_write(0x10 | ((col >> 4) & 0x0F)); // upper 4 bits
+	SPI_deselect();
+}
 
-void oled_clear_line(uint8_t line);
+void oled_clear_line(uint8_t line){
+	oled_set_pos(line, 0);
+	for (uint8_t i = 0; i < 128; i++){
+		oled_write_data(0x00);
+	}
+}
 
-void oled_set_pos(uint8_t row, uint8_t col);
+void oled_set_pos(uint8_t line, uint8_t col){
+	oled_goto_line(line);
+	oled_goto_col(col);
+}
 
-void oled_write_data(char c){ //something something volatile
+void oled_write_data(const char c){ //something something volatile
+	// test out if the constant selecting and deselecting is required
     SPI_select_slave(OLED_DATA);
-    while(1){
-        SPI_M_write(0b11111111);
-    }
+	SPI_M_write(c);
+	SPI_deselect();
 }
-void oled_print(char* string);
+
+void oled_print(const char* string){
+	while (*string){
+		char c = *string++; //returns current char from string and increments the pointer
+		for (uint8_t i = 0; i < 8; i++){
+			oled_write_data(pgm_read_byte(&font8[c-32][i])); //reads the byte from PROGMEM and sends it to the oled
+		}
+	}
+}
 
 void oled_set_brightness(uint8_t level);

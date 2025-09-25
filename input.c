@@ -1,4 +1,4 @@
-#pragma once
+#include "consts.h"
 #include <avr/io.h>
 #include "input.h"
 #include "SPI.h"
@@ -41,7 +41,7 @@ void input_read(volatile INPUT_DATA* data){
 	_delay_us(2);
 	data->joy_button = (uint8_t) SPI_M_read(); //read joystick button
 	SPI_deselect();
-	
+
 	// buttons
 	SPI_select_slave(AVR_s);
 	SPI_M_write(0x04); //send read command
