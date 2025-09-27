@@ -15,6 +15,8 @@ void oled_init(){
     SPI_M_write(0xAf);
     SPI_M_write(0xb0);
 	SPI_deselect();
+	oled_reset();
+	oled_home();
 /*    SPI_M_write(0xA1); //Segment remap
     SPI_M_write(0xDA); // Common pads hardware: alternative
     SPI_M_write(0x12); // Set higher column start adress
@@ -91,4 +93,9 @@ void oled_print(const char* string){
 	}
 }
 
-void oled_set_brightness(uint8_t level);
+void oled_set_brightness(uint8_t level){
+	SPI_select_slave(OLED_CMD);
+	SPI_M_write(0x81); //Contrast control
+	SPI_M_write(level); //level 0-255
+	SPI_deselect();
+}

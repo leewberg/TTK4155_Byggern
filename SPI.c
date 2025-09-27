@@ -39,7 +39,6 @@ volatile char SPI_M_read(void){
 
 void SPI_deselect(){
 	PORTB |= (1 << PB4) | (1 << PB3) | (1 << PB2) | (1 << PB1); //deselects all slaves
-	_delay_us(40);
 }
 
 void SPI_select_slave(enum SLAVES slave){

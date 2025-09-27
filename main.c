@@ -8,6 +8,7 @@
 #include "unit_tests/uart.h"
 // #include "adc.h"
 #include "SPI.h"
+#include "menu.h"
 #include "oled.h"
 #include "input.h"
 
@@ -20,16 +21,21 @@ int main(){
 	uart_init(MYUBRR);
 	SRAM_init();
 	SPI_M_init();
-	// oled_init();
-	// oled_reset();
-	// oled_print("Hello, World!");
-	// oled_write_data('a');
+	oled_init();
 	volatile INPUT_DATA* data = input_init();
-	set_leds(&(LED_DATA){0b00101101});
+	Menu* menu = menu_init();
+	int selected = -1;
 	while(1){
 		input_read(data);
-		input_print(data);
-		_delay_ms(100);
+		selected = menu_update(menu, data);
+		if (selected != -1){
+			printf(menu->items[selected].name);
+			printf("\n\r");
+			if (selected == 3){
+				oled_reset();
+				return 0;
+			}
+		}
 	}
 	return 0;
 }
