@@ -16,7 +16,8 @@ void SPI_M_init(void){
 	//Sets MISO as input, all others as output
 	DDRB = (1<<DDB7) | (0 << DDB6) | (1 << DDB5) | (1 << DDB4) |  (1 << DDB3) | (1 << DDB2) | (1 << DDB1);
 	//Enable SPI, Master, set clock rate as fck/16
-	SPCR = (1<<SPE) | (1 << MSTR) | (1 <<SPR0) | (0 << SPR1);
+	SPCR = (1<<SPE) | (1 << MSTR) | (0 <<SPR0) | (0 << SPR1); // might reset to fck/4 if too fast
+	SPSR = (1 << SPI2X); // double speed -> fck/2
 	//Use SPI-Mode 0 (table on p 165 in datasheet). since the rest of SPCR is 0 (except for SPE, MSTR, and SPR0), we don't need to explicitly set CPOL and CPHA, but if you choose another mode, you knwo which signals to change :]
 	//see p. 163 in datasheet if you want to change SPI clock rate.
 	//if you want to enable interrupts: | (1<<SPIE);
