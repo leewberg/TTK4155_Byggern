@@ -57,6 +57,7 @@ void oled_goto_line(uint8_t line){
 	SPI_M_write(0xB0 | (line & 0x0F)); 
 	SPI_deselect();
 }
+
 void oled_goto_col(uint8_t col){
 	SPI_select_slave(OLED_CMD);
 	// some more bitmagic: we have to split the 8 bit column number into two 4 bit parts and send them with different commands
@@ -91,6 +92,7 @@ void oled_print(const char* string){
 			oled_write_data(pgm_read_byte(&font8[c-32][i])); //reads the byte from PROGMEM and sends it to the oled
 		}
 	}
+}
 
 
 void oled_write_cmd(char c){
