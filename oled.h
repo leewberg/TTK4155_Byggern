@@ -18,4 +18,5 @@ void oled_write_data(const char c); //something something volatile
 
 void oled_print(const char* string);
 
+
 void oled_set_brightness(uint8_t level);

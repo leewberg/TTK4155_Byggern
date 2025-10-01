@@ -91,6 +91,12 @@ void oled_print(const char* string){
 			oled_write_data(pgm_read_byte(&font8[c-32][i])); //reads the byte from PROGMEM and sends it to the oled
 		}
 	}
+
+
+void oled_write_cmd(char c){
+    SPI_select_slave(OLED_CMD);
+    SPI_M_write(c);
+    PORTB |= (1<<PB3);
 }
 
 void oled_set_brightness(uint8_t level){
