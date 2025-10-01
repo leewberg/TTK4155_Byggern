@@ -4,6 +4,23 @@
 #include "mcp2515.h"
 #include "SPI.h"
 #include <stdio.h>
+#include <util/delay.h>
+#include <stdlib.h>
+
+// Send-buffer 0
+#define MCP_TXB0SIDH 0x31
+
+//Send-buffer 1
+#define MCP_TXB1SIDH 0x41
+
+//Send-buffer 2
+#define MCP_TXB2SIDH 0x51
+
+// Motta-buffer 0
+#define MCP_RXB0SIDH 0x61
+
+// Motta-buffer 1
+#define MCP_RXB1SIDH 0x71
 
 //PB0: interrupt pin for CAN
 

@@ -11,6 +11,7 @@
 #include "menu.h"
 #include "oled.h"
 #include "input.h"
+#include "CAN.h"
 
 //picocom command to read output from computer
 //picocom -b 9600 -p 2 -r -l /dev/ttyS0
@@ -20,8 +21,19 @@
 int main(){
 	uart_init(MYUBRR);
 	SRAM_init();
-	SPI_M_init();
-	oled_init();
+    
+    can_init();
+    can_set_mode(MODE_LOOPBACK);
+    printf("mode: %x\r\n", can_read(MCP_CANSTAT));
+
+
+    can_write(MCP_TXB0SIDH, 0xA7);
+    can_rts(0);
+    uint8_t byte = can_read(MCP_TXB0SIDH);
+    printf("mottar: %x\r\n", byte);
+//	SPI_M_init();
+	
+    /*oled_init();
 	volatile INPUT_DATA* data = input_init();
 	Menu* menu = menu_init();
 	int selected = -1;
@@ -36,6 +48,6 @@ int main(){
 				return 0;
 			}
 		}
-	}
+	}*/
 	return 0;
 }

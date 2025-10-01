@@ -8,9 +8,6 @@ void can_init(void){
 
     can_reset();
 
-    //set normal mode
-    can_set_mode(MODE_NORMAL);
-
     _delay_ms(1);
 }
 
