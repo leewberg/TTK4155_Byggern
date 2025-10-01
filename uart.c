@@ -1,4 +1,6 @@
 #include <avr/io.h>
+#include "consts.h"
+#include <util/delay.h>
 #include <stdio.h>
 #include "uart.h"
 

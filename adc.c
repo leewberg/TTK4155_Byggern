@@ -1,5 +1,6 @@
 #pragma once
 #include "adc.h"
+#include "consts.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <util/delay.h>
