@@ -1,5 +1,9 @@
 build
 openocd
-.clangd
+.cache*
+.dump
+unit_tests/
+.clangd*
+.clang-format
 compile_commands.json
 *.log

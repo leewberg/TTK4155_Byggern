@@ -2,7 +2,7 @@
 #include "consts.h"
 #include <avr/io.h>
 
-enum DIRECTION {UP, DOWN, LEFT, RIGHT, NEUTRAL};
+enum DIRECTION { UP, DOWN, LEFT, RIGHT, NEUTRAL };
 
 typedef struct {
 	int x;
@@ -15,8 +15,9 @@ typedef struct {
 	enum DIRECTION dir;
 } ADC_DATA;
 
-
-volatile const ADC_DATA* adc_init(void);
+volatile const ADC_DATA *adc_init(void);
 void adc_test(void);
 
-void adc_print(volatile const ADC_DATA* adc_data); // this one should take inn adc_data, becuase its a util to be used outside adc.c
+void adc_print(volatile const ADC_DATA
+				   *adc_data); // this one should take inn adc_data, becuase its
+							   // a util to be used outside adc.c

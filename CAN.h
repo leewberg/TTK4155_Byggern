@@ -1,19 +1,19 @@
 #pragma once
-#include <avr/io.h>
+#include "SPI.h"
 #include "consts.h"
 #include "mcp2515.h"
-#include "SPI.h"
+#include <avr/io.h>
 #include <stdio.h>
-#include <util/delay.h>
 #include <stdlib.h>
+#include <util/delay.h>
 
 // Send-buffer 0
 #define MCP_TXB0SIDH 0x31
 
-//Send-buffer 1
+// Send-buffer 1
 #define MCP_TXB1SIDH 0x41
 
-//Send-buffer 2
+// Send-buffer 2
 #define MCP_TXB2SIDH 0x51
 
 // Motta-buffer 0
@@ -22,7 +22,7 @@
 // Motta-buffer 1
 #define MCP_RXB1SIDH 0x71
 
-//PB0: interrupt pin for CAN
+// PB0: interrupt pin for CAN
 
 void can_init(void);
 
@@ -38,4 +38,4 @@ void can_bit_modify(uint8_t adress, uint8_t mask, uint8_t data);
 
 void can_reset();
 
-void can_set_mode (uint8_t mode);
+void can_set_mode(uint8_t mode);

@@ -1,9 +1,9 @@
 #pragma once
-#include <stdlib.h>
 #include <avr/io.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-#define BASE_ADRESS 0x1400 //SRAM start adress
+#define BASE_ADRESS 0x1400 // SRAM start adress
 
 void SRAM_init();
 
