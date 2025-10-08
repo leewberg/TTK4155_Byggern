@@ -1,0 +1,32 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/arm-none-eabi-gcc",
+      "-c",
+      "-mcpu=cortex-m3",
+      "-mthumb",
+      "-g",
+      "-std=c11",
+      "-I",
+      "sam",
+      "-I",
+      "sam/sam3x/include",
+      "-I",
+      "sam/sam3x/source",
+      "-I",
+      "sam/cmsis",
+      "-I",
+      ".",
+	  "-isystem",
+	  "/usr/lib/gcc/arm-none-eabi/13.2.1/../../../arm-none-eabi/include",
+      "-D",
+      "__SAM3X8E__",
+      "-o",
+      "build/exceptions.o",
+      "sam/sam3x/source/exceptions.c"
+    ],
+    "directory": "/home/felicia/skole/byggern/openocd/TTK4155_Byggern/Node2",
+    "file": "/home/felicia/skole/byggern/openocd/TTK4155_Byggern/Node2/sam/sam3x/source/exceptions.c",
+    "output": "/home/felicia/skole/byggern/openocd/TTK4155_Byggern/Node2/build/exceptions.o"
+  },
+]

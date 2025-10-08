@@ -1,0 +1,18 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/avr-gcc",
+      "-O",
+      "-std=c11",
+      "-mmcu=atmega162",
+      "-ggdb",
+      "-c",
+      "-o",
+      "build/uart.o",
+      "uart.c",
+    ],
+    "directory": "/home/felicia/skole/byggern/openocd/TTK4155_Byggern",
+    "file": "/home/felicia/skole/byggern/openocd/TTK4155_Byggern/uart.c",
+    "output": "/home/felicia/skole/byggern/openocd/TTK4155_Byggern/build/uart.o"
+  }
+]
