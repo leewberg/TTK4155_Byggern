@@ -1,9 +1,9 @@
 #include "SRAM.h"
 #include "consts.h"
 #include "uart.h"
-#include "unit_tests/SRAM.h"
-#include "unit_tests/latch.h"
-#include "unit_tests/uart.h"
+#include "../unit_tests/SRAM.h"
+#include "../unit_tests/latch.h"
+#include "../unit_tests/uart.h"
 #include <avr/io.h>
 #include <util/delay.h>
 // #include "adc.h"
