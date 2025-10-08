@@ -24,7 +24,7 @@
 
 // PB0: interrupt pin for CAN
 
-void can_init(void);
+int can_init(void);
 
 volatile uint8_t can_read(uint8_t adress);
 

@@ -1,9 +1,6 @@
 #include "SRAM.h"
 #include "consts.h"
 #include "uart.h"
-#include "../unit_tests/SRAM.h"
-#include "../unit_tests/latch.h"
-#include "../unit_tests/uart.h"
 #include <avr/io.h>
 #include <util/delay.h>
 // #include "adc.h"
@@ -23,13 +20,15 @@ int main() {
 	SRAM_init();
 
 	can_init();
-	can_set_mode(MODE_LOOPBACK);
+	can_set_mode(MODE_NORMAL);
 	printf("mode: %x\r\n", can_read(MCP_CANSTAT));
 
-	can_write(MCP_TXB0SIDH, 0xA7);
-	can_rts(0);
-	uint8_t byte = can_read(MCP_TXB0SIDH);
-	printf("mottar: %x\r\n", byte);
+	while(1){
+		printf("%4d", can_rs());
+		can_rts(0);
+		can_write(MCP_TXB0SIDH, 0b1);
+	}
+	
 	//	SPI_M_init();
 
 	/*oled_init();

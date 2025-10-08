@@ -12,7 +12,7 @@
 
 #include "sam.h"
 
-#include "../uart_and_printf/printf-stdarg.h"
+//#include "../uart_and_printf/printf-stdarg.h"
 
 
 /**
@@ -42,7 +42,7 @@ uint8_t can_init_def_tx_rx_mb(uint32_t can_br)
  */
 
 
-uint8_t can_init(uint32_t can_br, uint8_t num_tx_mb, uint8_t num_rx_mb)
+uint8_t can_controller_init(uint32_t can_br, uint8_t num_tx_mb, uint8_t num_rx_mb)
 {
 	
 	//Make sure num_rx_mb and num_tx_mb is valid

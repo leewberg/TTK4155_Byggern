@@ -2,6 +2,7 @@
 #include <stdarg.h>
 #include "sam.h"
 #include "uart.h"
+#include "can.h"
 
 /*
  * Remember to update the Makefile with the (relative) path to the uart.c file.
@@ -17,6 +18,9 @@ int BAUD = 9600;
 #define F_CPU 84000000
 
 int main()
+    /*TODO:
+        decide CAN bus bit-timing by writing to CNFx on MCP2551 (match w/ CAN_BR register om ATSAM3X8E)
+    */
 {
     SystemInit();
 
@@ -27,10 +31,24 @@ int main()
 
     //Uncomment after including uart above
     uart_init(F_CPU, BAUD);
-    printf("Hello World\n\r");
+
+    CanInit canInit;
+    canInit.brp = 104;
+    canInit.phase1 = 2;
+    canInit.phase2 = 2;
+    canInit.propag = 0;
+    canInit.smp = 0;
+    canInit.sjw = 0;
+    can_init(canInit, 0);
+    printf("Hello World\r\n");
+
+    CanMsg obj;
 
     while (1)
-    {
+    {   
+//        can_rx(&obj);
+        printf("%4d\r\n",can_rx(&obj));
+        //printf("%4d\r\n", obj.byte);
         /* code */
     }
 }
