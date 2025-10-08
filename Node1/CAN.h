@@ -7,6 +7,12 @@
 #include <stdlib.h>
 #include <util/delay.h>
 
+typedef struct {
+	uint16_t id;
+	uint8_t length;
+	uint8_t data[8];
+} CAN_message;
+
 // Send-buffer 0
 #define MCP_TXB0SIDH 0x31
 

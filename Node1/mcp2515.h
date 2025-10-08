@@ -65,6 +65,26 @@ Copyright 2003 Kimberly Otten Software Consulting
 #define MCP_RXB1CTRL 0x70
 #define MCP_RXB1SIDH 0x71
 
+
+#define TXB0CTRL 0x30
+#define TXB1CTRL 0x40
+#define TXB2CTRL 0x50
+
+// TXBnSIDH registers
+#define TXB0SIDH 0x31
+#define TXB1SIDH 0x41
+#define TXB2SIDH 0x51
+
+// TXBnSIDL registers
+#define TXB0SIDL 0x32
+#define TXB1SIDL 0x42
+#define TXB2SIDL 0x52
+
+// TXBnDLC registers
+#define TXB0DLC 0x35
+#define TXB1DLC 0x45
+#define TXB2DLC 0x55
+
 #define MCP_TX_INT 0x1C	  // Enable all transmit interrupts
 #define MCP_TX01_INT 0x0C // Enable TXB0 and TXB1 interrupts
 #define MCP_RX_INT 0x03	  // Enable receive interrupts

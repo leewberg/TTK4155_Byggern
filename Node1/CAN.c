@@ -3,10 +3,10 @@
 int can_init(void) {
 	SPI_M_init();
 
+	can_reset();
 	// set config mode
 	can_set_mode(MODE_CONFIG);
 
-	can_reset();
 
 	_delay_ms(1);
 
@@ -84,4 +84,14 @@ void can_reset() {
 
 void can_set_mode(uint8_t mode) {
 	can_bit_modify(MCP_CANCTRL, 0b11100000, mode);
+}
+
+void CAN_send(CAN_message* message, int buffer_number){
+	can_write(TXB0SIDH, (message->id >> 3));
+	can_write(TXB0SIDL, (message->id << 5));
+	can_write(TXB0DLC, message->length);
+	for (int i = 0; i < message->length; i++){
+		can_write(TXB0DLC + 1 + i, message->data[i]);
+	}
+	can_rts(buffer_number);
 }
