@@ -12,7 +12,10 @@ typedef struct {
 	uint8_t left_btns;	// total of 7 buttons, MSB does nothing
 	uint8_t nav_switch; // bit 0: up, bit 1: down, bit 2: left, bit 3: right,
 						// bit 4: button
+	uint8_t joy_x_abs; // 0-100
+	uint8_t joy_y_abs; // 0-100
 } INPUT_DATA;
+// TODO add processing to get direction from joystick
 
 // TODO move this to a different file later
 typedef struct {

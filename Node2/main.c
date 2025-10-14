@@ -47,8 +47,13 @@ int main()
     while (1)
     {   
 //        can_rx(&obj);
-        printf("%4d\r\n",can_rx(&obj));
-        //printf("%4d\r\n", obj.byte);
+		obj.id = 0x12;	
+		obj.length = 2;
+		obj.byte[0] = 0xFF;
+		obj.byte[1] = 0x00;
+		can_tx(obj);
+		int i = 0;
+		while(i < 1000000) {i++;}
         /* code */
     }
 }

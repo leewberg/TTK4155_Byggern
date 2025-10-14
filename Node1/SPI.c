@@ -1,4 +1,6 @@
 #include "SPI.h"
+#include "consts.h"
+#include <util/delay.h>
 
 /*Pins:
 MOSI: PB5 (Master: DDB6)
@@ -19,7 +21,7 @@ void SPI_M_init(void) {
 	// Enable SPI, Master, set clock rate as fck/16
 	SPCR = (1 << SPE) | (1 << MSTR) | (0 << SPR0) |
 		   (0 << SPR1);	 // might reset to fck/4 if too fast
-	SPSR = (1 << SPI2X); // double speed -> fck/2
+	SPSR = (0 << SPI2X); // double speed -> fck/2
 	// Use SPI-Mode 0 (table on p 165 in datasheet). since the rest of SPCR is 0
 	// (except for SPE, MSTR, and SPR0), we don't need to explicitly set CPOL
 	// and CPHA, but if you choose another mode, you knwo which signals to
