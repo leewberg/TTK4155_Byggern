@@ -28,7 +28,7 @@ int adc_digital_to_angle(volatile const int D, const int D_min, const int D_mid,
 	}
 }
 
-enum DIRECTION get_direction(volatile const POS *joy) {
+DIRECTION get_direction(volatile const POS *joy) {
 	if (joy->y > JOY_DEADZONE) {
 		return UP;
 	} else if (joy->y < -JOY_DEADZONE) {
@@ -79,11 +79,11 @@ void adc_test() {
 	}
 }
 
-ISR(TIMER0_OVF_vect) {
-	adc_get(adc_data);
-	joystick_norm(adc_data);
-	adc_data->dir = get_direction(&adc_data->joy);
-}
+// ISR(TIMER0_OVF_vect) {
+// 	adc_get(adc_data);
+// 	joystick_norm(adc_data);
+// 	adc_data->dir = get_direction(&adc_data->joy);
+// }
 
 volatile const ADC_DATA *adc_init(void) {
 	// initiate the CTC mode for creating a clock signal for the ADC

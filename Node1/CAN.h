@@ -6,12 +6,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <util/delay.h>
+#include <stdbool.h>
 
 typedef struct {
 	uint16_t id;
 	uint8_t length;
 	uint8_t data[8];
-} CAN_message;
+} can_frame;
 
 // Send-buffer 0
 #define MCP_TXB0SIDH 0x31
@@ -45,3 +46,7 @@ void can_bit_modify(uint8_t adress, uint8_t mask, uint8_t data);
 void can_reset();
 
 void can_set_mode(uint8_t mode);
+
+void CAN_send(const can_frame* message);
+
+bool CAN_receive(can_frame* message);

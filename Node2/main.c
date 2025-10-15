@@ -3,6 +3,9 @@
 #include "sam.h"
 #include "uart.h"
 #include "can.h"
+#include "pwm.h"
+#include "input.h"
+#include "output.h"
 
 /*
  * Remember to update the Makefile with the (relative) path to the uart.c file.
@@ -31,24 +34,28 @@ int main()
 
     //Uncomment after including uart above
     uart_init(F_CPU, BAUD);
+	output_init();
 
-    CanInit canInit;
-    canInit.brp = 104;
-    canInit.phase1 = 2;
-    canInit.phase2 = 2;
-    canInit.propag = 0;
-    canInit.smp = 0;
-    canInit.sjw = 0;
-    can_init(canInit, 0);
-    printf("Hello World\r\n");
+    // CanInit canInit;
+    // canInit.brp = 104;
+    // canInit.phase1 = 2;
+    // canInit.phase2 = 2;
+    // canInit.propag = 0;
+    // canInit.smp = 0;
+    // canInit.sjw = 0;
+    // can_init(canInit, 0);
+	pwm_init();
+	
+	pwm_set_duty_cycle(900);
 
     CanMsg obj;
+	CanMsg recv_msg;
 
+    printf("Hello World\r\n");
     while (1)
-    {   
-//        can_rx(&obj);
-        printf("%4d\r\n",can_rx(&obj));
-        //printf("%4d\r\n", obj.byte);
-        /* code */
+    {
+		// while (!can_rx(&recv_msg) || recv_msg.id != 2);
+		// update_inputs(recv_msg.byte[0], recv_msg.byte[1], recv_msg.byte[2]);
+		// pwm_set_duty_cycle(input_data->joy_x * 10);
     }
 }
