@@ -11,6 +11,9 @@ SOURCE_FILES = \
 	uart.c \
 	can_controller.c \
 	can.c \
+	pwm.c \
+	input.c \
+	output.c \
 #	../path_to/uart.c \
 #   filename1.c \
 #   filename2.c \
