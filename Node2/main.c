@@ -6,6 +6,7 @@
 #include "pwm.h"
 #include "input.h"
 #include "output.h"
+#include "adc.h"
 
 /*
  * Remember to update the Makefile with the (relative) path to the uart.c file.
@@ -27,6 +28,9 @@ int main()
 {
     SystemInit();
 
+
+    __enable_irq();
+
     WDT->WDT_MR = WDT_MR_WDDIS; //Disable Watchdog Timer
 	PMC->PMC_PCER0 |= (1 << ID_PIOA); //send clock to PIOA
 	PIOA->PIO_OER |= (1 << 6); //Set pin PA0 as output
@@ -35,6 +39,8 @@ int main()
     //Uncomment after including uart above
     uart_init(F_CPU, BAUD);
 	output_init();
+    adc_init();
+
 
     // CanInit canInit;
     // canInit.brp = 104;
@@ -54,6 +60,7 @@ int main()
     printf("Hello World\r\n");
     while (1)
     {
+        print_trigger();
 		// while (!can_rx(&recv_msg) || recv_msg.id != 2);
 		// update_inputs(recv_msg.byte[0], recv_msg.byte[1], recv_msg.byte[2]);
 		// pwm_set_duty_cycle(input_data->joy_x * 10);

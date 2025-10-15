@@ -14,6 +14,7 @@ SOURCE_FILES = \
 	pwm.c \
 	input.c \
 	output.c \
+	adc.c \
 #	../path_to/uart.c \
 #   filename1.c \
 #   filename2.c \
