@@ -23,7 +23,7 @@ void doom_init() {
 void fetch_and_send_inputs() {
 	input_read(data);
 	msg.id = 0x02;
-	msg.length = 3;
+	msg.length = 4;
 	msg.data[0] = 0;
 	
 	msg.data[0] |= (data->joy_pos.y > 128 + JOY_DEADZONE); // up
@@ -35,7 +35,7 @@ void fetch_and_send_inputs() {
 	
 	msg.data[1] = data->joy_x_abs;
 	msg.data[2] = data->joy_y_abs;
-
+	msg.data[3] = data->slider;
 	CAN_send(&msg);
 }
 

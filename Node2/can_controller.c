@@ -62,7 +62,7 @@ uint8_t can_controller_init(uint32_t can_br, uint8_t num_tx_mb, uint8_t num_rx_m
 	
 	// Disable interrupts on CANH and CANL pins
 	PIOA->PIO_IDR = PIO_PA8A_URXD | PIO_PA9A_UTXD;
-	
+		
 	//Select CAN0 RX and TX in PIOA
 	uint32_t ul_sr = PIOA->PIO_ABSR;
 	PIOA->PIO_ABSR = ~(PIO_PA1A_CANRX0 | PIO_PA0A_CANTX0) & ul_sr;

@@ -20,9 +20,9 @@ void output_init() {
 	send_msg.length = 8;
 
 	recv_msg.id = 0x000;
-	recv_msg.length = 1;
+	recv_msg.length = 4;
 
-	can_init(canInit, 0);
+	can_init(canInit, 1);
 }
 
 
@@ -30,5 +30,5 @@ void can_transmit() {
     while (!can_rx(&recv_msg) || recv_msg.id != 2);
 	
 	// sends the display buffer over CAN
-	update_inputs(recv_msg.byte[0], recv_msg.byte[1], recv_msg.byte[2]);
+	update_inputs(recv_msg.byte[0], recv_msg.byte[1], recv_msg.byte[2], recv_msg.byte[3]);
 }

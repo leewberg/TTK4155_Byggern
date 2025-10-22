@@ -23,3 +23,8 @@ void pwm_set_duty_cycle(uint16_t duty_cycle) {
 	REG_PWM_CDTYUPD1 = pwm_period - duty_cycle; // while enabled, write to update register
 	
 }
+
+void pwm_set_position(uint8_t pos){
+	float newpos = (1 - pos/255.0)*1100+900;
+	pwm_set_duty_cycle(newpos);
+}

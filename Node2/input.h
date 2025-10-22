@@ -12,11 +12,12 @@ typedef struct {
 	bool reset;
 	uint8_t joy_x; //magnitude: 0-100
 	uint8_t joy_y;
+	uint8_t slider;
 } Inputs;
 
 extern Inputs* input_data;
 
 void input_setup();
-void update_inputs(uint8_t new_state, uint8_t joy_x, uint8_t joy_y);
+void update_inputs(uint8_t new_state, uint8_t joy_x, uint8_t joy_y, uint8_t slider);
 
 #endif

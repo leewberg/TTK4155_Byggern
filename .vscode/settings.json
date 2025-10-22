@@ -1,6 +1,7 @@
 {
     "files.associations": {
         ".als.json": "jsonc",
-        "cstdint": "c"
+        "cstdint": "c",
+        "stdint.h": "c"
     }
 }

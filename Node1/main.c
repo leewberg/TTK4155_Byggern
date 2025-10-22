@@ -20,34 +20,15 @@
 int main() {
 	wdt_disable();
 	uart_init(MYUBRR);
-	// SRAM_init();
 
 	doom_init();
 	printf("Hello, World!\r\n");
 	while (1) {
-		doom_loop();
-		printf("Frame done\r\n");
+		fetch_and_send_inputs();
+		_delay_us(1000);
 	}
 
-	// can_init();
-	// can_set_mode(MODE_NORMAL);
-	// printf("mode: %x\r\n", can_read(MCP_CANSTAT));
-	// can_frame msg;
-	// msg.id = 0x00;
-	// msg.length = 8;
-	// msg.data[0] = 8;
-	// msg.data[1] = 7;
-	//
-	// while(1){
-	// 	while(!CAN_receive(&msg));
-	// }
-	
-	// SPI_M_init();
-	//
-	// oled_init();
-	// volatile INPUT_DATA* data = input_init();
-	// Menu* menu = menu_init();
-	// int selected = -1;
+
 	// while(1){
 	// 	input_read(data);
 	// 	selected = menu_update(menu, data);

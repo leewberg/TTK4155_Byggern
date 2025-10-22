@@ -2,6 +2,10 @@
 #include "sam.h"
 #include "can.h"
 #include <stdio.h>
+#include "input.h"
+
+
+volatile CanMsg can_msg;
 
 void can_printmsg(CanMsg m){
     printf("CanMsg(id:%d, length:%d, data:{", m.id, m.length);
@@ -111,15 +115,16 @@ uint8_t can_rx(CanMsg* m){
     
 
     
-/*
+
 // Example CAN interrupt handler
 void CAN0_Handler(void){
     char can_sr = CAN0->CAN_SR; 
     
     // RX interrupt
     if(can_sr & (1 << rxMailbox)){
-        // Add your message-handling code here
-        can_printmsg(can_rx());
+        if (can_rx(&can_msg)){ //read sucessful
+            update_inputs(can_msg.byte[0], can_msg.byte[1], can_msg.byte[2], can_msg.byte[3]);
+        }
     } else {
         printf("CAN0 message arrived in non-used mailbox\n\r");
     }
@@ -130,6 +135,4 @@ void CAN0_Handler(void){
     }
     
     NVIC_ClearPendingIRQ(ID_CAN0);
-} 
-*/
-
+}

@@ -38,19 +38,11 @@ int main()
 
     //Uncomment after including uart above
     uart_init(F_CPU, BAUD);
+    input_setup();
 	output_init();
     adc_init();
 
-
-    // CanInit canInit;
-    // canInit.brp = 104;
-    // canInit.phase1 = 2;
-    // canInit.phase2 = 2;
-    // canInit.propag = 0;
-    // canInit.smp = 0;
-    // canInit.sjw = 0;
-    // can_init(canInit, 0);
-	pwm_init();
+    pwm_init();
 	
 	pwm_set_duty_cycle(900);
 
@@ -58,9 +50,9 @@ int main()
 	CanMsg recv_msg;
 
     printf("Hello World\r\n");
-    while (1)
-    {
-        print_trigger();
+    while (1){
+        printf("%d\r\n", input_data->slider);
+        pwm_set_position(input_data->slider);
 		// while (!can_rx(&recv_msg) || recv_msg.id != 2);
 		// update_inputs(recv_msg.byte[0], recv_msg.byte[1], recv_msg.byte[2]);
 		// pwm_set_duty_cycle(input_data->joy_x * 10);
