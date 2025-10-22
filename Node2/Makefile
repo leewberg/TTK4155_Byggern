@@ -15,6 +15,7 @@ SOURCE_FILES = \
 	input.c \
 	output.c \
 	adc.c \
+	encoder.c \
 #	../path_to/uart.c \
 #   filename1.c \
 #   filename2.c \

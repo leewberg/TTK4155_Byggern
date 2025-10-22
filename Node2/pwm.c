@@ -3,8 +3,8 @@
 void pwm_init() {
 	PMC->PMC_PCER0 |= (1 << ID_PIOB); //send clock to PIOB
 	PMC->PMC_PCER1 |= (1 << (ID_PWM - 32)); //send clock to PWM
-	PIOB->PIO_PDR |= PIO_PB13; // disable PIO on PB12
-	PIOB->PIO_ABSR |= PIO_PB13; // select peripheral A for PB12 (PWMH0)
+	PIOB->PIO_PDR |= PIO_PB13; // disable PIO on PB13
+	PIOB->PIO_ABSR |= PIO_PB13; // select peripheral B for PB13 (PWMH0)
 	
 	PWM->PWM_WPCR = 0x50574D << 8 | 0b111111 << 2; //Unlock write protection for all registers
 	// read to check if write protection is disabled

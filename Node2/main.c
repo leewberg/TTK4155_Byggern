@@ -7,6 +7,7 @@
 #include "input.h"
 #include "output.h"
 #include "adc.h"
+#include "encoder.h"
 
 /*
  * Remember to update the Makefile with the (relative) path to the uart.c file.
@@ -43,6 +44,7 @@ int main()
     adc_init();
 
     pwm_init();
+    encoder_init();
 	
 	pwm_set_duty_cycle(900);
 
@@ -51,7 +53,7 @@ int main()
 
     printf("Hello World\r\n");
     while (1){
-        printf("%d\r\n", input_data->slider);
+        printf("%d\r\n", encoder_read());
         pwm_set_position(input_data->slider);
 		// while (!can_rx(&recv_msg) || recv_msg.id != 2);
 		// update_inputs(recv_msg.byte[0], recv_msg.byte[1], recv_msg.byte[2]);
