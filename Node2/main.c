@@ -8,6 +8,7 @@
 #include "output.h"
 #include "adc.h"
 #include "encoder.h"
+#include "motor_controller.h"
 
 /*
  * Remember to update the Makefile with the (relative) path to the uart.c file.
@@ -43,18 +44,13 @@ int main()
 	output_init();
     adc_init();
 
-    pwm_init();
-    encoder_init();
-	
-	pwm_set_duty_cycle(900);
-
+    motor_init();
     CanMsg obj;
 	CanMsg recv_msg;
 
     printf("Hello World\r\n");
     while (1){
-        printf("%d\r\n", encoder_read());
-        pwm_set_position(input_data->slider);
+        motor_control();
 		// while (!can_rx(&recv_msg) || recv_msg.id != 2);
 		// update_inputs(recv_msg.byte[0], recv_msg.byte[1], recv_msg.byte[2]);
 		// pwm_set_duty_cycle(input_data->joy_x * 10);
