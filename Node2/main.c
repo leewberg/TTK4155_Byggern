@@ -21,7 +21,6 @@
  */
 //#include "../path_to/uart.h"
 int BAUD = 9600;
-#define F_CPU 84000000
 
 int main()
     /*TODO:
@@ -40,6 +39,7 @@ int main()
 
     //Uncomment after including uart above
     uart_init(F_CPU, BAUD);
+    printf("Hello World\r\n");
     input_setup();
 	output_init();
     adc_init();
@@ -48,7 +48,6 @@ int main()
     CanMsg obj;
 	CanMsg recv_msg;
 
-    printf("Hello World\r\n");
     while (1){
         motor_control();
 		// while (!can_rx(&recv_msg) || recv_msg.id != 2);

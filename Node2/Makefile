@@ -17,6 +17,8 @@ SOURCE_FILES = \
 	adc.c \
 	encoder.c \
 	motor_controller.c \
+	time.c \
+
 #	../path_to/uart.c \
 #   filename1.c \
 #   filename2.c \
