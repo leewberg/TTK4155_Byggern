@@ -19,7 +19,7 @@ void motor_init(){
 	PIOB->PIO_ABSR |= PIO_PB25; // select peripheral A for PA4 (TIOA0)
 	
 	TC0->TC_CHANNEL[0].TC_CMR = TC_CMR_ACPC_CLEAR | TC_CMR_ACPA_NONE | TC_CMR_ASWTRG_SET | TC_CMR_WAVE | TC_CMR_WAVSEL_UP_RC | TC_CMR_TCCLKS_TIMER_CLOCK4; // waveform mode, clock/128, up mode with automatic
-	TC0->TC_CHANNEL[0].TC_RC = 65620;             // 10ms at 656250Hz
+	TC0->TC_CHANNEL[0].TC_RC = 65620*2;             // 10ms at 656250Hz
 		
 	TC0->TC_CHANNEL[0].TC_CCR = TC_CCR_CLKEN | TC_CCR_SWTRG; // enable and start counter
 
@@ -35,31 +35,31 @@ void motor_control(){
 	}
 
 	// set the angle according to the slider
-    pwm_set_position(input_data->slider);
+    pwm_set_position(128);//(input_data->slider);
 	
 	// sliding reference
 	if (input_data->left) {
-		ref += (double)(systick_ms - last_time+1) / 1000.0 * speed;
+		ref += (double)(systick_ms - last_time+1) / 1000.0 * speed*input_data->joy_x/100.0;
 		if (ref > 1.0) {
 			ref = 1.0;
 		}
 	}
 	else if (input_data->right) {
-		ref -= (double)(systick_ms - last_time+1) / 1000.0 * speed;
+		ref -= (double)(systick_ms - last_time+1) / 1000.0 * speed*input_data->joy_x/100.0;
 		if (ref < 0.0) {
 			ref = 0.0;
 		}
 	}
 	// read encoder value
     double encoder_val = encoder_read()/2805.0;
-    if(encoder_val<0.0 || encoder_val > 1.0){
+    if(encoder_val<0.0){
         encoder_val=0.0;
     }
 
-    // ref = 1-((double)input_data->slider)/255.0;
+    ref = 1-((double)input_data->slider)/255.0;
 	// PI controller
     double error = ref - encoder_val;
-	// integral += error * ((double)(systick_ms - last_time+1)/1000.0);
+	integral += error * ((double)(systick_ms - last_time+1)/1000.0);
 
 	double u = (error)*K_p + integral * K_i;
 
@@ -74,6 +74,7 @@ void motor_control(){
 
 
     motor_set_duty_cycle(u);
+	printf("ref: %f error: %f current: %f \r\n", ref, error, encoder_val);
 
 	// bookeping
 

@@ -32,7 +32,7 @@ void pwm_set_duty_cycle(uint16_t duty_cycle) {
 }
 
 void motor_set_duty_cycle(uint16_t duty_cycle){
-	if (duty_cycle < 40) duty_cycle = 0;
+	if (duty_cycle < 2000) duty_cycle = 0;
 	if (duty_cycle> pwm_period) duty_cycle = pwm_period;
 	REG_PWM_CDTYUPD0 = pwm_period - duty_cycle;
 }

@@ -52,6 +52,7 @@ int main()
 
     while (1){
         motor_control();
+        delay_ms(5);
 		// while (!can_rx(&recv_msg) || recv_msg.id != 2);
 		// update_inputs(recv_msg.byte[0], recv_msg.byte[1], recv_msg.byte[2]);
 		// pwm_set_duty_cycle(input_data->joy_x * 10);
