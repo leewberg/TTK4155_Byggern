@@ -17,6 +17,6 @@ void encoder_init(void){
     REG_TC2_BMR = (1<<8) | (1<<9); //enables position measure on channel 0 and 1. enables QDEC
 }
 
-uint32_t encoder_read(){
+int32_t encoder_read(){
     return REG_TC2_CV0;
 }

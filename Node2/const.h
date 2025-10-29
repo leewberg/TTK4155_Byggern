@@ -5,4 +5,4 @@
 #define pwm_period 20000 // pulses 1 us each
 #define speed 4.0 // % of board / sec, for sliding reference
 #define K_p 30000.0
-#define K_i 10000.0
+#define K_i 0//10000.0

@@ -36,33 +36,39 @@ void motor_control(){
 
 	// set the angle according to the slider
     pwm_set_position(128);//(input_data->slider);
+
 	
-	// sliding reference
-	if (input_data->left) {
-		ref += (double)(systick_ms - last_time+1) / 1000.0 * speed*input_data->joy_x/100.0;
-		if (ref > 1.0) {
-			ref = 1.0;
-		}
+	if (input_data->up){
+		pwm_set_position(input_data->joy_y+100);
 	}
-	else if (input_data->right) {
-		ref -= (double)(systick_ms - last_time+1) / 1000.0 * speed*input_data->joy_x/100.0;
-		if (ref < 0.0) {
-			ref = 0.0;
-		}
+	else{
+		pwm_set_position(-input_data->joy_y+100);
 	}
-	printf("Ref: %f\r\n", ref);
+
 	// read encoder value
     double encoder_val = encoder_read()/2805.0;
     if(encoder_val<0.0){
         encoder_val=0.0;
     }
-
-    ref = 1-((double)input_data->slider)/255.0;
+	if (input_data->left){
+		ref = 1-((double)100-input_data->joy_x)/200.0;
+	}
+	else{
+	    ref = 1-((double)100+input_data->joy_x)/200.0;
+	}
 	// PI controller
     double error = ref - encoder_val;
 	integral += error * ((double)(systick_ms - last_time+1)/1000.0);
 
-	double u = (error)*K_p + integral * K_i;
+	double u;
+
+	if ((error <= 0.05 && error >0) || (error >= -0.05 && error <0)){
+		u = (error)*K_p*3 + integral * K_i;
+
+	}
+	else{
+		u = (error)*K_p + integral * K_i;
+	}
 
 	// actuate the computed gain
     if(u < 0){
@@ -72,6 +78,7 @@ void motor_control(){
     else{
         PIOC->PIO_CODR = PIO_PC23;
     }
+
 
 
     motor_set_duty_cycle(u);

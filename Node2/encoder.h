@@ -7,4 +7,4 @@
 
 void encoder_init(void);
 
-uint32_t encoder_read();
+int32_t encoder_read();

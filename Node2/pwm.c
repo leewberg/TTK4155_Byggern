@@ -33,11 +33,11 @@ void pwm_set_duty_cycle(uint16_t duty_cycle) {
 
 void motor_set_duty_cycle(uint16_t duty_cycle){
 	if (duty_cycle < 2000) duty_cycle = 0;
-	if (duty_cycle> pwm_period) duty_cycle = pwm_period;
+	if (duty_cycle> pwm_period-10000) duty_cycle = pwm_period-10000;
 	REG_PWM_CDTYUPD0 = pwm_period - duty_cycle;
 }
 
-void pwm_set_position(uint8_t pos){
-	float newpos = (1 - pos/255.0)*1100+900;
+void pwm_set_position(int pos){
+	float newpos = (1 - pos/200.0)*1100+900;
 	pwm_set_duty_cycle(newpos);
 }

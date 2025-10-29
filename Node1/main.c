@@ -25,6 +25,7 @@ int main() {
 	printf("Hello, World!\r\n");
 	while (1) {
 		fetch_and_send_inputs();
+		fetch_frame();
 		_delay_us(1000);
 	}
 
