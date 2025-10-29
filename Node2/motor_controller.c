@@ -34,10 +34,7 @@ void motor_control(){
 		TC0->TC_CHANNEL[0].TC_CCR = TC_CCR_SWTRG;
 	}
 
-	// set the angle according to the slider
-    pwm_set_position(128);//(input_data->slider);
-
-	
+	// set the angle according to the slider	
 	if (input_data->up){
 		pwm_set_position(input_data->joy_y+100);
 	}

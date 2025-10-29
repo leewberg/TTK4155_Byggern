@@ -3,12 +3,16 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "sam.h"
-#include "constants.h"
+#include "const.h"
 #include "pwm.h"
 #include "encoder.h"
 #include "input.h"
-#include "adc.h"
+#include "time.h"
 //2813
+
+static uint32_t last_time;
+static double integral;
+static long double ref;
 
 void motor_init();
 

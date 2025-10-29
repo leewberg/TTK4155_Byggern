@@ -40,6 +40,7 @@ int main()
 	setupDisplay();
     motor_init();
 	time_init();
+	adc_init();
 
 
     printf("Hello World\r\n");
@@ -54,6 +55,8 @@ int main()
 			printf("Time's up!\r\n");
 			run_doom();
 		}
+		printf("%d\r\n", systick_ms - input_data->start_time );
+		print_trigger();
 		can_transmit(); // push the frame
 		
     }

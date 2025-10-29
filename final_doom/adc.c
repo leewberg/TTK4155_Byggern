@@ -1,4 +1,5 @@
 #include "adc.h"
+#include "time.h"
 
 volatile uint8_t adc_triggered = 0;
 
@@ -22,7 +23,7 @@ void adc_init(void){
 void ADC_Handler(void){
     uint32_t status = ADC-> ADC_ISR;
     if (status&ADC_ISR_COMPE){
-		input_data->start_time = 0;
+		input_data->start_time = systick_ms;
         adc_triggered=1;
     }
 }
