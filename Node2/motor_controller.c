@@ -50,6 +50,7 @@ void motor_control(){
 			ref = 0.0;
 		}
 	}
+	printf("Ref: %f\r\n", ref);
 	// read encoder value
     double encoder_val = encoder_read()/2805.0;
     if(encoder_val<0.0){
