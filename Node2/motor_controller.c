@@ -50,6 +50,7 @@ void motor_control(){
 			ref = 0.0;
 		}
 	}
+	printf("Ref: %f\r\n", ref);
 	// read encoder value
     double encoder_val = encoder_read()/2805.0;
     if(encoder_val<0.0 || encoder_val > 1.0){
@@ -59,7 +60,8 @@ void motor_control(){
     // ref = 1-((double)input_data->slider)/255.0;
 	// PI controller
     double error = ref - encoder_val;
-	// integral += error * ((double)(systick_ms - last_time+1)/1000.0);
+	integral += error * ((double)(systick_ms - last_time+1)/1000.0);
+	printf("Error: %f Integral: %f\r\n", error, integral);
 
 	double u = (error)*K_p + integral * K_i;
 
