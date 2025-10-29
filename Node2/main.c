@@ -8,6 +8,7 @@
 #include "output.h"
 #include "adc.h"
 #include "encoder.h"
+#include "time.h"
 #include "motor_controller.h"
 
 /*
@@ -39,6 +40,7 @@ int main()
 
     //Uncomment after including uart above
     uart_init(F_CPU, BAUD);
+	time_init();
     printf("Hello World\r\n");
     input_setup();
 	output_init();
