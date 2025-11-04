@@ -26,6 +26,13 @@ void ADC_Handler(void){
     }
 }
 
+uint16_t ADC_polling(void){
+
+	ADC->ADC_CR = ADC_CR_START; // Start conversion
+	while (!(ADC->ADC_ISR & ADC_ISR_EOC0)); // Wait for end of conversion
+	return ADC->ADC_CDR[0]; // Read result
+}
+
 void print_trigger(){
     if (adc_triggered){
         adc_triggered = 0;

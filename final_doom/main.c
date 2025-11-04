@@ -44,15 +44,16 @@ int main()
 
 
     printf("Hello World\r\n");
+
     while (1){
         motor_control();
-		drawText(64, 32, "Time: ", 1);
-		drawInt(100, 32, input_data->start_time);
-		// think about resetting the display here maybe?
+		drawText(SCREEN_WIDTH / 2 - 25, SCREEN_HEIGHT * .8, "TIME ", 1);
+		// drawInt(100, 32, input_data->start_time);
 
-		// check if timer overflowed. eventually, this is the point to init doom
+		// check if timer overflowed.
 		if (systick_ms - input_data->start_time >= play_time){
 			printf("Time's up!\r\n");
+			memset(display_buf, 0, SCREEN_WIDTH * SCREEN_HEIGHT / 8); // clear display
 			run_doom();
 		}
 		printf("%d\r\n", systick_ms - input_data->start_time );

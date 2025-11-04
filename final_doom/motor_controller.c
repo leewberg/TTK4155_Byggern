@@ -25,6 +25,7 @@ void motor_init(){
 
 	last_time = systick_ms;
 	integral = 0.0;
+	prev_servo = 0;
 }
 
 void motor_control(){
@@ -35,11 +36,14 @@ void motor_control(){
 	}
 
 	// set the angle according to the slider	
-	if (input_data->up){
-		pwm_set_position(input_data->joy_y+100);
-	}
-	else{
-		pwm_set_position(-input_data->joy_y+100);
+	if (input_data->joy_y > prev_servo + 1 || input_data->joy_y < prev_servo - 1){ // this is a basic deadzone so we don't spam the servo
+		if (input_data->up){
+			pwm_set_position(input_data->joy_y+100);
+		}
+		else{
+			pwm_set_position(-input_data->joy_y+100);
+		}
+		prev_servo = input_data->joy_y;
 	}
 
 	// read encoder value
@@ -47,7 +51,11 @@ void motor_control(){
     if(encoder_val<0.0){
         encoder_val=0.0;
     }
-	if (input_data->left){
+	// exctract and rescale reference
+	if (input_data->reset){
+		ref = 0.0;
+	}
+	else if (input_data->left){
 		ref = 1-((double)100-input_data->joy_x)/200.0;
 	}
 	else{

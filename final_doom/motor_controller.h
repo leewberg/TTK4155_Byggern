@@ -13,6 +13,7 @@
 static uint32_t last_time;
 static double integral;
 static long double ref;
+static uint8_t prev_servo;
 
 void motor_init();
 
