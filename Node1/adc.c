@@ -55,9 +55,9 @@ void joystick_norm(volatile ADC_DATA *adc_data) {
 	adc_data->joy.x += JOY_X_OFFSET;
 	adc_data->joy.y += JOY_Y_OFFSET;
 	adc_data->joy.x =
-		adc_digital_to_angle(adc_data->joy.x, Dx_min, Dx_mid, Dx_max);
+		adc_digital_to_angle(adc_data->joy.x, Dx_min, Dx_mid, Dx_max) - 25;
 	adc_data->joy.y =
-		adc_digital_to_angle(adc_data->joy.y, Dy_min, Dy_mid, Dy_max);
+		adc_digital_to_angle(adc_data->joy.y, Dy_min, Dy_mid, Dy_max) - 25;
 }
 
 void calibrate_joystick(volatile ADC_DATA *adc_data) {
@@ -69,24 +69,26 @@ void calibrate_joystick(volatile ADC_DATA *adc_data) {
 
 void adc_print(volatile const ADC_DATA *adc_data) {
 	printf(
-		"Touchpad x: %4d Toucpad y: %4d Joystick x: %4d Joystick y: %4d  \n\r",
+		"Touchpad x: %4d Toucpad y: %4d Joystick x: %4d Joystick y: %4d  \r\n",
 		adc_data->touch.x, adc_data->touch.y, adc_data->joy.x, adc_data->joy.y);
 }
 
 void adc_test() {
-	while (1) {
+	while(1){
 		adc_print(adc_data);
+		_delay_ms(100);
 	}
 }
 
-// ISR(TIMER0_OVF_vect) {
-// 	adc_get(adc_data);
-// 	joystick_norm(adc_data);
-// 	adc_data->dir = get_direction(&adc_data->joy);
-// }
+ISR(TIMER0_OVF_vect) {
+	adc_get(adc_data);
+	joystick_norm(adc_data);
+	adc_data->dir = get_direction(&adc_data->joy);
+}
 
 volatile const ADC_DATA *adc_init(void) {
 	// initiate the CTC mode for creating a clock signal for the ADC
+	cli();
 	DDRD |= (1 << PD5); // enable output on pin D5
 	TCCR1A = 0;			// reset configuration
 	TCCR1B = 0;
@@ -105,7 +107,7 @@ volatile const ADC_DATA *adc_init(void) {
 	// set up timer0 for interrupt
 	TCCR0 = (1 << CS01) | (1 << CS00); // Prescaler 64
 	TIMSK |= (1 << TOIE0);
-	sei(); // Enable global interrupts
+	sei();
 
 	return adc_data;
 }

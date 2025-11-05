@@ -2,7 +2,7 @@
 #include "input.h"
 #include <stdlib.h>
 
-Inputs* input_data;
+volatile Inputs* input_data;
 
 void input_setup() {
 	input_data = (Inputs *)malloc(sizeof(Inputs));

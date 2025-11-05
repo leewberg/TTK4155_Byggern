@@ -17,7 +17,7 @@ typedef struct {
 	uint8_t slider;
 } Inputs;
 
-extern Inputs* input_data;
+extern volatile Inputs* input_data;
 
 void input_setup();
 void update_inputs(uint8_t new_state, uint8_t joy_x, uint8_t joy_y, uint8_t slider);

@@ -35,20 +35,20 @@ int main()
     uart_init(F_CPU, BAUD);
 	
 	// important to do this in this order
+
     input_setup();
 	output_init();
 	setupDisplay();
     motor_init();
 	time_init();
 	adc_init();
-
-
     printf("Hello World\r\n");
+	delay_ms(10);
 
     while (1){
         motor_control();
 		drawText(SCREEN_WIDTH / 2 - 25, SCREEN_HEIGHT * .8, "TIME ", 1);
-		// drawInt(100, 32, input_data->start_time);
+		drawInt(SCREEN_WIDTH / 2 + 25, SCREEN_HEIGHT * .8, (systick_ms-input_data->start_time)/1000);
 
 		// check if timer overflowed.
 		if (systick_ms - input_data->start_time >= play_time){
@@ -57,8 +57,10 @@ int main()
 			run_doom();
 		}
 		printf("%d\r\n", systick_ms - input_data->start_time );
-		print_trigger();
+		ADC_poller();
 		can_transmit(); // push the frame
+
+		memset(display_buf, 0, SCREEN_WIDTH * SCREEN_HEIGHT / 8); // clear display
 		
     }
 }

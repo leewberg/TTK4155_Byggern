@@ -2,6 +2,8 @@
     "files.associations": {
         ".als.json": "jsonc",
         "cstdint": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "adc.h": "c",
+        "sram_test.h": "c"
     }
 }

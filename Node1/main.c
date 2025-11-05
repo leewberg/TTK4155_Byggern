@@ -1,9 +1,10 @@
 #include "SRAM.h"
+#include "sram_test.h"
 #include "consts.h"
 #include "uart.h"
 #include <avr/io.h>
 #include <util/delay.h>
-// #include "adc.h"
+#include "adc.h"
 #include "CAN.h"
 #include "SPI.h"
 #include "input.h"
@@ -11,6 +12,7 @@
 #include "oled.h"
 #include "doom_handler.h"
 #include <avr/wdt.h>
+#include <avr/interrupt.h>
 
 // picocom command to read output from computer
 // picocom -b 9600 -p 2 -r -l /dev/ttyS0
@@ -20,9 +22,16 @@
 int main() {
 	wdt_disable();
 	uart_init(MYUBRR);
+	adc_init();
+	//SRAM_init();
+	//run SRAM test
 
 	doom_init();
 	printf("Hello, World!\r\n");
+	SRAM_test();
+	//adc_test();
+
+	//sei(); // Enable global interrupts
 	while (1) {
 		fetch_and_send_inputs();
 		fetch_frame();

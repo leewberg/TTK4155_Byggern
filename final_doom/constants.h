@@ -9,7 +9,7 @@
 #define minpwm 900 // us
 #define freqPWM 50 // Hz
 #define pwm_period 20000 // pulses 1 us each
-#define play_time 20000*10 // 20 sek to survive untill doom initiates
+#define play_time 20000 // 20 sek to survive untill doom initiates
 #include <stdint.h>
 // Key pinout
 #define USE_INPUT_PULLUP

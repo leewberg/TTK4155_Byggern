@@ -13,14 +13,22 @@ void adc_init(void){
     ADC -> ADC_EMR = ADC_EMR_CMPMODE_LOW;
     ADC -> ADC_CWR = ADC_CWR_LOWTHRES(LOWTRESHOLD);
     ADC -> ADC_IER = ADC_IER_COMPE;
-    NVIC_EnableIRQ(ADC_IRQn);
+    //NVIC_EnableIRQ(ADC_IRQn);
     ADC-> ADC_MR |= ADC_MR_FREERUN_ON;
     ADC->ADC_CR = ADC_CR_START;
     ADC -> ADC_WPMR = ADC_WPMR_WPEN;
 }
 
 
-void ADC_Handler(void){
+void ADC_poller(){
+    if (ADC-> ADC_ISR & ADC_ISR_COMPE){
+        delay_ms(1);
+        if (ADC-> ADC_ISR & ADC_ISR_COMPE){
+            input_data->start_time = systick_ms;
+        }
+    }
+}
+/*void ADC_Handler(void){
     uint32_t status = ADC-> ADC_ISR;
     if (status&ADC_ISR_COMPE){
 		input_data->start_time = systick_ms;
@@ -28,9 +36,10 @@ void ADC_Handler(void){
     }
 }
 
+
 void print_trigger(){
     if (adc_triggered){
         adc_triggered = 0;
         printf("ADC interrupt\r\n");
     }
-}
+}*/
