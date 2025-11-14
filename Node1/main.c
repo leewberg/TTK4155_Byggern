@@ -31,7 +31,8 @@ int main() {
 	SRAM_test();
 	//adc_test();
 
-	//sei(); // Enable global interrupts
+	sei(); // Enable global interrupts
+	_delay_ms(10);
 	while (1) {
 		fetch_and_send_inputs();
 		fetch_frame();

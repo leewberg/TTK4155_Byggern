@@ -51,6 +51,9 @@ void motor_control(){
     if(encoder_val<0.0){
         encoder_val=0.0;
     }
+	else if(encoder_val>1.0){
+        encoder_val=1.0;
+    }
 	// exctract and rescale reference
 	if (input_data->reset){
 		ref = 0.0;
